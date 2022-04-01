@@ -101,7 +101,7 @@ void loop() {
                     Serial.println("Acceso denegado...");
                        lcd.clear();
                        lcd.setCursor(0, 1);
-                       lcd.print("Acceso denegado......");
+                       lcd.print("Acceso denegado...");
                   // Terminamos la lectura de la tarjeta tarjeta  actual
                   mfrc522.PICC_HaltA();
           
