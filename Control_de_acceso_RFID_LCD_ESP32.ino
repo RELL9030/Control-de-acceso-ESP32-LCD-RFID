@@ -55,8 +55,7 @@ void setup() {
   SPI.begin();        //Iniciamos el Bus SPI
   mfrc522.PCD_Init(); // Iniciamos el módulo MFRC522
   Serial.println("Control de acceso:");
-  lcd.clear(); Limpiamos la pantalla LCD//
-  lcd.print("Coloque la tarjeta cerca del lector");
+  lcd.clear(); //Limpiamos la pantalla LCD
 }
 
 /*
@@ -84,6 +83,8 @@ void loop() {
                           Serial.print(mfrc522.uid.uidByte[i], HEX);   
                           ActualUID[i]=mfrc522.uid.uidByte[i];          
                   }
+                  lcd.clear(); //Limpiamos la pantalla LCD
+                  lcd.print("Coloque la tarjeta cerca del lector");
                   Serial.print("     ");                 
                   //comparamos los UID para determinar si es uno de nuestros usuarios  
                   if(compareArray(ActualUID,Usuario1))
