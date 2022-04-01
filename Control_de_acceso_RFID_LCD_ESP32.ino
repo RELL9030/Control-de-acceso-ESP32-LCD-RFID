@@ -1,6 +1,6 @@
 /*
  * Date: 31/03/2022
- * Title: Control de acceso ESP32 + LCD + RFID + BT
+ * Title: Control de acceso ESP32 + LCD + RFID
  * Author: Rubén Lozano
  * 
  * Referencias: https://naylampmechatronics.com/blog/22_tutorial-modulo-lector-rfid-rc522.html
@@ -25,6 +25,7 @@
  *   LIBRERIAS
  *****************************************************
 */
+#include <LiquidCrystal.h>  //Libreria encargada de la comunicación con la Pantalla
 #include <SPI.h>
 #include <MFRC522.h>
 #include "funciones.h"
@@ -33,18 +34,15 @@
  *   VARIABLES Y OBJETOS (GLOBALES)
  *****************************************************
 */
-#define RST_PIN  22    //GPIO22 para el reset del RC522
-#define SS_PIN  21   //GPIO21 para el SS (SDA) del RC522
+const int RS=5,EN=17,DB4=16,DB5=4,DB6=2,DB7=15;// LCD pins;  
+const int SDA_PIN=21,RST_PIN=22;   //GPIO21 para el SS (SDA) del RC522 
+                                   //GPIO22 para el reset del RC522
 MFRC522 mfrc522(SS_PIN, RST_PIN); ///Creamos el objeto para el RC522
-
 byte ActualUID[4]; //almacenará el código del Tag leído
 
-/* *****************************************************
- * Target 1:   CB 12 A4 21     TAG 1: 07 24 70 34   
- * Target 2:   04 5E 4C 63     TAG 2: E9 BD DE 2A
- ******************************************************/
-byte Usuario1[4]= {0x4D, 0x5C, 0x6A, 0x45} ; //código del usuario 1
-byte Usuario2[4]= {0xC1, 0x2F, 0xD6, 0x0E} ; //código del usuario 2
+
+byte Usuario1[4]= {0xCB, 0x12, 0xA4, 0x21} ; //código del usuario 1
+byte Usuario2[4]= {0x04, 0x5E, 0x4C, 0x63} ; //código del usuario 2
 
 /*
  *****************************************************
@@ -52,10 +50,13 @@ byte Usuario2[4]= {0xC1, 0x2F, 0xD6, 0x0E} ; //código del usuario 2
  *****************************************************
 */
 void setup() {
+  lcd.begin(16, 2); // Configurar el número de columnas y filas de la pantalla LCD:
   Serial.begin(115200); //Iniciamos La comunicacion serial
   SPI.begin();        //Iniciamos el Bus SPI
-  mfrc522.PCD_Init(); // Iniciamos el MFRC522
+  mfrc522.PCD_Init(); // Iniciamos el módulo MFRC522
   Serial.println("Control de acceso:");
+  lcd.clear(); Limpiamos la pantalla LCD//
+  lcd.print("Coloque la tarjeta cerca del lector");
 }
 
 /*
@@ -64,6 +65,11 @@ void setup() {
  *****************************************************
 */
 void loop() {
+    
+ for (int positionCounter = 0; positionCounter < 13; positionCounter++) {
+    lcd.scrollDisplayLeft(); //Desplaza el texto una posición a la izquierda
+    delay(300); // Esperamos un bit:
+    }
   // Revisamos si hay nuevas tarjetas  presentes
   if ( mfrc522.PICC_IsNewCardPresent()) //Esta función nos devuelve verdadero o falso dependiendo si hay una tarjeta presente cerca al módulo RC522.
         {  
@@ -77,16 +83,24 @@ void loop() {
                           Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
                           Serial.print(mfrc522.uid.uidByte[i], HEX);   
                           ActualUID[i]=mfrc522.uid.uidByte[i];          
-                  } 
+                  }
                   Serial.print("     ");                 
                   //comparamos los UID para determinar si es uno de nuestros usuarios  
                   if(compareArray(ActualUID,Usuario1))
                     Serial.println("Acceso concedido...");
+                       lcd.clear();
+                       lcd.setCursor(0, 1);
+                       lcd.print("Acceso concedido...");
                   else if(compareArray(ActualUID,Usuario2))
                     Serial.println("Acceso concedido...");
+                       lcd.clear();
+                       lcd.setCursor(0, 1);
+                       lcd.print("Acceso concedido...");
                   else
                     Serial.println("Acceso denegado...");
-                  
+                       lcd.clear();
+                       lcd.setCursor(0, 1);
+                       lcd.print("Acceso denegado......");
                   // Terminamos la lectura de la tarjeta tarjeta  actual
                   mfrc522.PICC_HaltA();
           
