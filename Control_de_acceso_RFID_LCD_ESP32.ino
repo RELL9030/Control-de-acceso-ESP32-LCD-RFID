@@ -34,7 +34,8 @@
  *   VARIABLES Y OBJETOS (GLOBALES)
  *****************************************************
 */
-const int RS=5,EN=17,DB4=16,DB5=4,DB6=2,DB7=15;// LCD pins;  
+const int RS=5,EN=17,DB4=16,DB5=4,DB6=2,DB7=15;// LCD pins;
+LiquidCrystal lcd(RS, EN, DB4, DB5, DB6, DB7); //INICIALIZACION LCD 16x2
 const int SDA_PIN=21,RST_PIN=22;   //GPIO21 para el SS (SDA) del RC522 
                                    //GPIO22 para el reset del RC522
 MFRC522 mfrc522(SS_PIN, RST_PIN); ///Creamos el objeto para el RC522
