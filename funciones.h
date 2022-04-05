@@ -1,5 +1,19 @@
 /*
  *****************************************************
+ *   VARIABLES Y OBJETOS (GLOBALES)
+ *****************************************************
+*/
+const int RS=5,EN=17,DB4=16,DB5=4,DB6=2,DB7=15;// LCD pins;
+LiquidCrystal lcd(RS, EN, DB4, DB5, DB6, DB7); //INICIALIZACION LCD 16x2
+
+// GPIO donde LED esta conectado 
+//RGB Ánodo comun(+): 32,33,25 Cátodo comun(-): 25,33,32
+//BICOLOR: RED:25 BLUE:33 
+const int ledPinR =  32;
+const int ledPinG =  25;
+const int ledPinB =  33;
+/*
+ *****************************************************
  *    FUNCTIONS
  *****************************************************
 */
@@ -11,4 +25,13 @@
   if(array1[2] != array2[2])return(false);
   if(array1[3] != array2[3])return(false);
   return(true);
+}
+
+//Función para mostrar mensaje en la lcd
+void Lcd_mensaje(String d,int Col,int Fil,int r, int g, int b)
+{
+   lcd.clear(); //Limpiamos la pantalla LCD
+   lcd.setCursor(Col, Fil);
+   lcd.print(d);
+   setColor(r,g,b);
 }
