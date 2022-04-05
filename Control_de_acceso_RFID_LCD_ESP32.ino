@@ -26,8 +26,8 @@
  *****************************************************
 */
 #include <LiquidCrystal.h>  //Libreria encargada de la comunicación con la Pantalla
-#include <SPI.h>
-#include <MFRC522.h>
+#include <SPI.h> //Libreria encargada de la comunicación con el protocolo SPI
+#include <MFRC522.h>//Libreria encargada de la comunicación con el módulo RFID
 #include "funciones.h" //Funciones creadas en archivo de cabecera "funciones.h"
 /*
  *****************************************************
