@@ -9,8 +9,8 @@ LiquidCrystal lcd(RS, EN, DB4, DB5, DB6, DB7); //INICIALIZACION LCD 16x2
 // GPIO donde LED esta conectado 
 //RGB Ánodo comun(+): 32,33,25 Cátodo comun(-): 25,33,32
 //BICOLOR: RED:25 BLUE:33 
-const int ledPinR =  32;
-const int ledPinG =  25;
+const int ledPinR =  25;
+const int ledPinG =  32;
 const int ledPinB =  33;
 /*
  *****************************************************
