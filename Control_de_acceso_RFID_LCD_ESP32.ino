@@ -88,17 +88,17 @@ void loop() {
                   lcd.print("Coloque la tarjeta cerca del lector");
                   Serial.print("     ");                 
                   //comparamos los UID para determinar si es uno de nuestros usuarios  
-                  if(compareArray(ActualUID,Usuario1))
+                  if(compareArray(ActualUID,Usuario1)){
                     Serial.println("Acceso concedido...");
                        lcd.clear();
                        lcd.setCursor(0, 1);
                        lcd.print("Acceso concedido...");
-                  else if(compareArray(ActualUID,Usuario2))
+                  }else{ if(compareArray(ActualUID,Usuario2)){
                     Serial.println("Acceso concedido...");
                        lcd.clear();
                        lcd.setCursor(0, 1);
                        lcd.print("Acceso concedido...");
-                  else
+                  }else{
                     Serial.println("Acceso denegado...");
                        lcd.clear();
                        lcd.setCursor(0, 1);
@@ -106,7 +106,10 @@ void loop() {
                   // Terminamos la lectura de la tarjeta tarjeta  actual
                   mfrc522.PICC_HaltA();
           
-            }
+            }           
+          }
+        }
+      }
       
   }
   
