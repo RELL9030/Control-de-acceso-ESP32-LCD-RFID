@@ -17,6 +17,13 @@ const int ledPinB =  33;
  *    FUNCTIONS
  *****************************************************
 */
+//Función para cambiar estado de led
+void setColor(int R, int G, int B) {
+  digitalWrite(ledPinR, R);
+  digitalWrite(ledPinG, G);
+  digitalWrite(ledPinB, B);
+}
+
 //Función para comparar dos vectores
  boolean compareArray(byte array1[],byte array2[])
 {
